@@ -450,33 +450,273 @@
     margin-top:8px;
   }
 
-  /* ── RESPONSIVE ── */
-  @media(max-width:900px){
-    nav { padding:18px 24px; }
-    .nav-links { display:none; }
-    .overview-inner,
-    .economy-inner,
-    .dest-intro { grid-template-columns:1fr; }
+  /* ══════════════════════════════════════════
+     HAMBURGER MENU (oculto en desktop)
+  ══════════════════════════════════════════ */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+    z-index: 200;
+  }
+  .nav-hamburger span {
+    display: block;
+    width: 24px;
+    height: 1.5px;
+    background: var(--white);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  /* Drawer móvil */
+  .nav-drawer {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(14,11,8,0.97);
+    z-index: 150;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+  }
+  .nav-drawer.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+  .nav-drawer a {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: var(--white);
+    text-decoration: none;
+    letter-spacing: 1px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease, color 0.2s;
+  }
+  .nav-drawer.open a { opacity: 1; transform: translateY(0); }
+  .nav-drawer.open a:nth-child(1) { transition-delay: 0.05s; }
+  .nav-drawer.open a:nth-child(2) { transition-delay: 0.10s; }
+  .nav-drawer.open a:nth-child(3) { transition-delay: 0.15s; }
+  .nav-drawer.open a:nth-child(4) { transition-delay: 0.20s; }
+  .nav-drawer.open a:nth-child(5) { transition-delay: 0.25s; }
+  .nav-drawer.open a:nth-child(6) { transition-delay: 0.30s; }
+  .nav-drawer a:hover { color: var(--amber); }
+  .nav-drawer-close {
+    position: absolute;
+    top: 24px; right: 28px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem; letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(212,160,23,0.5);
+    cursor: pointer;
+    background: none; border: none;
+  }
+
+  /* ══════════════════════════════════════════
+     TABLET  — 768px a 1024px
+  ══════════════════════════════════════════ */
+  @media (max-width: 1024px) {
+    body { font-size: 17px; }
+
+    nav { padding: 20px 36px; }
+
+    /* Hero */
+    .hero-content { padding: 0 48px 64px; }
+    .hero-scroll { right: 36px; }
+
+    /* Overview */
+    .overview-inner { grid-template-columns: 1fr 1fr; }
+    .overview-left { padding: 80px 36px; }
+    .overview-right .img-block { min-height: 500px; }
+
+    /* Economy */
+    .economy-inner { padding: 0 36px; gap: 48px; }
+
+    /* Destinations */
+    .dest-intro { padding: 80px 36px 48px; gap: 40px; }
+    .dest-card { padding: 0 36px; margin-bottom: 60px; }
+    .dest-card.layout-a { grid-template-columns: 1.2fr 1fr; }
+    .dest-card.layout-b { grid-template-columns: 1fr 1.2fr; }
+    .dest-card.layout-c { grid-template-columns: 1fr 1fr; }
+    .dest-card.layout-c > div:first-child { grid-column: span 1; }
+    .dest-card.layout-d { grid-template-columns: 1fr 1fr; }
+    .dest-divider { padding: 0 36px; margin-bottom: 60px; }
+
+    /* Food */
+    .food-inner { padding: 0 36px; }
+    .food-grid { grid-template-columns: repeat(2, 1fr); }
+    .food-item:first-child { grid-row: span 2; }
+    #food { padding: 80px 0; }
+
+    /* Climate */
+    .climate-inner { padding: 0 36px; }
+    .climate-grid { grid-template-columns: 1fr 1fr; }
+    #climate { padding: 80px 0; }
+
+    /* Tips */
+    .tips-inner { padding: 0 36px; }
+    .tips-grid { grid-template-columns: repeat(2, 1fr); }
+    #tips { padding: 80px 0; }
+
+    /* Gallery */
+    .gallery-strip { grid-template-columns: repeat(3, 1fr); }
+
+    /* Footer */
+    footer { padding: 64px 36px 40px; gap: 40px; }
+
+    /* Economy */
+    #economy { padding: 80px 0; }
+  }
+
+  /* ══════════════════════════════════════════
+     MÓVIL  — hasta 767px
+  ══════════════════════════════════════════ */
+  @media (max-width: 767px) {
+    body { font-size: 16px; cursor: auto; }
+
+    /* Desactivar cursor custom en móvil */
+    .cursor, .cursor-ring { display: none; }
+
+    /* ── Nav ── */
+    nav {
+      padding: 16px 20px;
+      mix-blend-mode: normal;
+      background: linear-gradient(to bottom, rgba(14,11,8,0.85) 0%, transparent 100%);
+    }
+    .nav-links { display: none; }
+    .nav-hamburger { display: flex; }
+    .nav-drawer { display: flex; }
+
+    /* ── Hero ── */
+    .hero-content {
+      padding: 0 20px 52px;
+      max-width: 100%;
+    }
+    .hero-title {
+      font-size: clamp(3rem, 13vw, 5rem);
+      letter-spacing: -1px;
+    }
+    .hero-caption { font-size: 1rem; max-width: 100%; }
+    .hero-scroll { display: none; }
+    .hero-img-label { margin: 48px 16px 16px; }
+
+    /* ── Overview ── */
+    .overview-inner { grid-template-columns: 1fr; min-height: auto; }
+    .overview-left { padding: 56px 20px 40px; }
+    .overview-left p { max-width: 100%; }
+    .facts { grid-template-columns: 1fr 1fr; margin-top: 36px; }
+    .fact { padding: 16px 18px; }
+    .fact-val { font-size: 1.35rem; }
+    .overview-right .img-block { min-height: 280px; border-radius: 0; }
+
+    /* ── Economy ── */
+    #economy { padding: 64px 0; }
+    .economy-inner {
+      padding: 0 20px;
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .econ-pills { gap: 8px; }
+    .econ-pill { font-size: .52rem; padding: 7px 14px; }
+
+    /* ── Destinations ── */
+    .dest-intro {
+      padding: 56px 20px 36px;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    .dest-intro-right p { margin-left: 0; max-width: 100%; }
+    .dest-card {
+      padding: 0 20px;
+      margin-bottom: 48px;
+      grid-template-columns: 1fr !important;
+    }
     .dest-card.layout-a,
     .dest-card.layout-b,
     .dest-card.layout-c,
-    .dest-card.layout-d { grid-template-columns:1fr; }
-    .dest-card { padding:0 24px; }
-    .dest-intro { padding:60px 24px 40px; }
-    .dest-main-img { grid-row:span 1; }
-    .food-grid { grid-template-columns:1fr 1fr; }
-    .food-item:first-child { grid-row:span 1; }
-    .food-item:first-child .img-block { aspect-ratio:3/4; height:auto; }
-    .climate-grid,
-    .tips-grid { grid-template-columns:1fr; }
-    .gallery-strip { grid-template-columns:repeat(3,1fr); }
-    footer { grid-template-columns:1fr; padding:60px 24px 40px; }
-    .footer-right { align-items:flex-start; }
-    .overview-left { padding:70px 28px; }
-    .food-inner,
-    .climate-inner,
-    .tips-inner { padding:0 24px; }
-    .hero-content { padding:0 28px 60px; }
+    .dest-card.layout-d { grid-template-columns: 1fr; }
+    .dest-main-img { grid-row: span 1; }
+    .dest-card .img-block { aspect-ratio: 4/3 !important; }
+    .dest-card.layout-c > div:first-child { grid-column: span 1; }
+    .dest-name { font-size: clamp(1.8rem, 7vw, 2.4rem); }
+    .dest-info { padding: 20px 0 0 !important; }
+    .dest-divider { padding: 0 20px; margin-bottom: 48px; }
+    .highlights { gap: 6px; }
+    .hl { font-size: .48rem; padding: 4px 10px; }
+
+    /* ── Food ── */
+    #food { padding: 64px 0; }
+    .food-inner { padding: 0 20px; }
+    .food-grid {
+      grid-template-columns: 1fr;
+      margin-top: 36px;
+    }
+    .food-item:first-child { grid-row: span 1; }
+    .food-item:first-child .img-block { aspect-ratio: 3/4; height: auto; }
+    .food-item .img-block { aspect-ratio: 4/3 !important; }
+    div[style*="padding:0 64px"] {
+      padding: 0 20px !important;
+    }
+    #food > div:last-of-type { padding: 0 20px !important; }
+
+    /* ── Climate ── */
+    #climate { padding: 64px 0; }
+    .climate-inner { padding: 0 20px; }
+    .climate-grid {
+      grid-template-columns: 1fr;
+      margin-top: 36px;
+    }
+    .clim-card { padding: 28px 24px; }
+    .r-wide { aspect-ratio: 4/3; }
+
+    /* ── Tips ── */
+    #tips { padding: 64px 0; }
+    .tips-inner { padding: 0 20px; }
+    .tips-grid {
+      grid-template-columns: 1fr 1fr;
+      margin-top: 36px;
+    }
+    .tip { padding: 24px 18px; }
+    .tip-icon { font-size: 1.4rem; }
+    .tip-title { font-size: 1.05rem; }
+    .tip-text { font-size: .85rem; }
+
+    /* ── Gallery Strip ── */
+    .gallery-strip { grid-template-columns: repeat(2, 1fr); gap: 2px; }
+
+    /* ── Footer ── */
+    footer {
+      grid-template-columns: 1fr;
+      padding: 56px 20px 36px;
+      gap: 36px;
+    }
+    .footer-right { align-items: flex-start; }
+    .footer-tagline { font-size: clamp(1.8rem, 8vw, 2.5rem); }
+
+    /* ── Section titles ── */
+    .section-title { font-size: clamp(2rem, 7vw, 2.8rem); }
+  }
+
+  /* ══════════════════════════════════════════
+     EXTRA PEQUEÑO — hasta 400px
+  ══════════════════════════════════════════ */
+  @media (max-width: 400px) {
+    .tips-grid { grid-template-columns: 1fr; }
+    .gallery-strip { grid-template-columns: 1fr 1fr; }
+    .facts { grid-template-columns: 1fr 1fr; }
+    .hero-title { font-size: clamp(2.6rem, 14vw, 4rem); }
+    .hero-eyebrow { font-size: .52rem; letter-spacing: 3px; }
   }
 </style>
 </head>
@@ -491,7 +731,39 @@
     cur.style.left=e.clientX+'px'; cur.style.top=e.clientY+'px';
     curR.style.left=e.clientX+'px'; curR.style.top=e.clientY+'px';
   });
+
+  /* ── Hamburger ── */
+  const hamburger = document.getElementById('hamburger');
+  const drawer    = document.getElementById('navDrawer');
+  const drawerClose = document.getElementById('drawerClose');
+
+  function openDrawer() {
+    drawer.classList.add('open');
+    hamburger.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDrawer() {
+    drawer.classList.remove('open');
+    hamburger.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  hamburger.addEventListener('click', () => {
+    drawer.classList.contains('open') ? closeDrawer() : openDrawer();
+  });
+  drawerClose.addEventListener('click', closeDrawer);
+  drawer.addEventListener('click', e => { if (e.target === drawer) closeDrawer(); });
 </script>
+
+<!-- NAV DRAWER (móvil) -->
+<div class="nav-drawer" id="navDrawer">
+  <button class="nav-drawer-close" id="drawerClose">✕ cerrar</button>
+  <a href="#overview"    onclick="closeDrawer()">Overview</a>
+  <a href="#economy"     onclick="closeDrawer()">Economy</a>
+  <a href="#destinations" onclick="closeDrawer()">Destinations</a>
+  <a href="#food"        onclick="closeDrawer()">Food</a>
+  <a href="#climate"     onclick="closeDrawer()">Climate</a>
+  <a href="#tips"        onclick="closeDrawer()">Travel Tips</a>
+</div>
 
 <!-- NAV -->
 <nav>
@@ -504,6 +776,9 @@
     <li><a href="#climate">Climate</a></li>
     <li><a href="#tips">Travel Tips</a></li>
   </ul>
+  <button class="nav-hamburger" id="hamburger" aria-label="Abrir menú">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- HERO -->
